@@ -1,0 +1,3 @@
+python setup.py sdist bdist_wheel
+twine upload dist/*
+pypi-AgEIcHlwaS5vcmcCJGY3MzlmYjZhLTcyOGUtNGY4MS05MGUzLTYwMTEyNWJmMzU3OQACKlszLCIwZWMzNDQ0Zi03YzkzLTQwNTYtOTg3MC0wZWYzNjhjYmYyOGIiXQAABiANQWmn_mivKgdpAzxQxNCY9S3n-gvgZgK4L-vl4nHSjg

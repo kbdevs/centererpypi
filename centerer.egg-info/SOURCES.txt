@@ -5,5 +5,4 @@ centerer/main.py
 centerer.egg-info/PKG-INFO
 centerer.egg-info/SOURCES.txt
 centerer.egg-info/dependency_links.txt
-centerer.egg-info/requires.txt
 centerer.egg-info/top_level.txt

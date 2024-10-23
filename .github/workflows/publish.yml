@@ -1,40 +1,33 @@
-name: Publish Python 🐍 distributions 📦 to PyPI
+name: Publish Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main  # Change to your default branch if it's not 'main'
 
 jobs:
-  build-n-publish:
-    name: Build and publish Python 🐍 distributions 📦 to PyPI
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.11
-
-    - name: Install pip
-      run: python -m pip install --upgrade pip
+        python-version: '3.x' # Specify your Python version
 
     - name: Install dependencies
+      run: pip install --upgrade setuptools wheel twine
 
-    - name : Install black
-      run: pip install black
-
-    - name: Run black
-      run: black .
-
-    - name: Install build
-      run: python -m pip install build
-
-    - name: Build a binary wheel and a source tarball
-      run: python -m build --sdist --wheel --outdir dist/
-
-    - name: Publish distribution 📦 to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Run publish script
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        if [ -d "dist" ]; then rm -rf dist; fi
+        if [ -d "build" ]; then rm -rf build; fi
+        if [ -d "centerer.egg-info" ]; then rm -rf centerer.egg-info; fi
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
